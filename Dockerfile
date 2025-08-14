@@ -23,6 +23,8 @@ RUN mkdir -p /workspaces && \
 USER jovyan
 WORKDIR /home/jovyan
 
+ENV PATH="/home/jovyan/.local/bin:${PATH}"
+
 RUN pip3 install --user jupyterlab
 
 COPY setup_environment.sh /usr/local/bin/setup_environment.sh

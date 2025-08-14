@@ -14,23 +14,23 @@ detect_environment() {
     fi
 }
 
-setup_permissions() {
+setup_symlinks() {
     local env_type=$1
     
     case $env_type in
         "devcontainer"|"codespaces")
-            if [ -d "/workspaces" ]; then
-                sudo chown -R jovyan:jovyan /workspaces 2>/dev/null || true
+            # Create symlink from jovyan home to workspaces for compatibility
+            if [ ! -L "/home/jovyan/work" ] && [ -d "/workspaces" ]; then
+                ln -sf /workspaces /home/jovyan/work 2>/dev/null || true
             fi
             ;;
         "jupyterhub"|"jupyter")
-            if [ -d "/home/jovyan/work" ]; then
-                sudo chown -R jovyan:jovyan /home/jovyan/work 2>/dev/null || true
-            fi
+            # No symlinks needed for JupyterHub - native environment
             ;;
         *)
-            if [ -d "/workspace" ]; then
-                sudo chown -R jovyan:jovyan /workspace 2>/dev/null || true
+            # Create symlink for generic docker environment
+            if [ ! -L "/home/jovyan/work" ] && [ -d "/workspace" ]; then
+                ln -sf /workspace /home/jovyan/work 2>/dev/null || true
             fi
             ;;
     esac
@@ -42,7 +42,7 @@ setup_workspace() {
     
     echo "Detected environment: $env_type"
     
-    setup_permissions "$env_type"
+    setup_symlinks "$env_type"
     
     case $env_type in
         "devcontainer"|"codespaces")
