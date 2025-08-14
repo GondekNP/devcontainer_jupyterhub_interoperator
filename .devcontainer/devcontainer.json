@@ -1,0 +1,20 @@
+{
+    "name": "JupyterHub Interoperator",
+    "build": {
+        "dockerfile": "../Dockerfile"
+    },
+    "remoteUser": "jovyan",
+    "updateRemoteUserUID": true,
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+    "postCreateCommand": "source /usr/local/bin/setup_environment.sh && setup_workspace",
+    "forwardPorts": [8888],
+    "features": {},
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-toolsai.jupyter"
+            ]
+        }
+    }
+}
