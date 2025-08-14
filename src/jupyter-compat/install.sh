@@ -45,7 +45,7 @@ EOF
 
 chmod +x /usr/local/bin/fix-workspace-ownership.sh
 
-# Create a setup script that will run at container startup
+# Create a setup script that will run at container startup 
 cat > /usr/local/bin/setup-jupyter-devcontainer.sh << 'EOF'
 #!/bin/bash
 
