@@ -28,8 +28,9 @@ Add to your `devcontainer.json`:
 {
     "image": "jupyter/scipy-notebook:latest",
     "features": {
-        "./src/jupyter-compat": {}
-    }
+        "ghcr.io/your-username/devcontainer-features/jupyter-compat:1": {}
+    },
+    "remoteUser": "root"
 }
 ```
 
@@ -38,10 +39,18 @@ Add to your `devcontainer.json`:
 ```json
 {
     "features": {
-        "./src/jupyter-compat": {
+        "ghcr.io/your-username/devcontainer-features/jupyter-compat:1": {
             "jupyterUser": "jovyan",
             "jupyterWorkspace": "/home/jovyan/work"
         }
     }
 }
 ```
+
+## Publishing
+
+This feature is automatically published to GitHub Container Registry via GitHub Actions:
+
+1. **Push to main branch** - Triggers automatic publishing
+2. **Manual workflow dispatch** - Publish on demand
+3. **Version tagging** - Creates releases with version tags

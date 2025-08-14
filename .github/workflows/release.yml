@@ -1,0 +1,56 @@
+name: "Release dev container features & Generate Documentation"
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+
+jobs:
+  deploy:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Publish Features"
+        uses: devcontainers/action@v1
+        with:
+          publish-features: "true"
+          base-path-to-features: "./src"
+          generate-docs: "true"
+          
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.run_number }}
+          release_name: Release v${{ github.run_number }}
+          body: |
+            ## Features Published
+            
+            - jupyter-compat: Makes any Jupyter container work seamlessly in VSCode dev containers
+            
+            Published to: `ghcr.io/${{ github.repository_owner }}/devcontainer-features/*`
+            
+            ## Usage
+            ```json
+            {
+              "image": "jupyter/scipy-notebook:latest",
+              "features": {
+                "ghcr.io/${{ github.repository_owner }}/devcontainer-features/jupyter-compat:latest": {}
+              }
+            }
+            ```
+          draft: false
+          prerelease: false
