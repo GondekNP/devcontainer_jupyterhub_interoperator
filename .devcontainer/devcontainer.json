@@ -1,13 +1,10 @@
 {
     "name": "Jupyter with Dev Container Compatibility",
-    "image": "jupyter/scipy-notebook:latest",
-    "features": {
-        "../src/jupyter-compat": {
-            "jupyterUser": "jovyan",
-            "jupyterWorkspace": "/home/jovyan/work"
-        }
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "."
     },
-    "remoteUser": "jovyan",
+    "remoteUser": "root",
     "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
     "forwardPorts": [8888],
     "customizations": {
