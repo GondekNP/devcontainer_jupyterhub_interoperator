@@ -1,0 +1,22 @@
+{
+    "version": "1.0.0",
+    "name": "Jupyter Dev Container Compatibility",
+    "id": "jupyter-compat",
+    "description": "Makes any Jupyter container work seamlessly in VSCode dev containers by creating workspace symlinks and handling user permissions",
+    "documentationURL": "https://github.com/your-org/devcontainer-features/tree/main/src/jupyter-compat",
+    "options": {
+        "jupyterUser": {
+            "type": "string",
+            "default": "jovyan",
+            "description": "The Jupyter user account name"
+        },
+        "jupyterWorkspace": {
+            "type": "string", 
+            "default": "/home/jovyan/work",
+            "description": "The Jupyter workspace directory"
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ]
+}
